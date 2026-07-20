@@ -1,0 +1,15 @@
+index=windows (EventCode=4720 OR EventCode=4625 OR EventCode=4624 OR EventCode=4732)
+("soclabuser" OR TargetUserName="soclabuser" OR Account_Name="soclabuser" OR MemberName="*soclabuser*")
+| eval activity=case(
+    EventCode=4720,"Account Created",
+    EventCode=4625,"Failed Logon",
+    EventCode=4624,"Successful Logon",
+    EventCode=4732,"Added to Local Group",
+    true(),"Other"
+  )
+| eval actor=coalesce(SubjectUserName, Caller_User_Name)
+| eval target=coalesce(TargetUserName, Account_Name, MemberName)
+| eval src_ip=coalesce(IpAddress, Source_Network_Address, src_ip)
+| eval logon_type=coalesce(LogonType, Logon_Type)
+| table _time host EventCode activity actor target src_ip logon_type GroupName
+| sort 0 _time

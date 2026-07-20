@@ -1,0 +1,5 @@
+index=windows EventCode=4720
+| eval created_account=coalesce(TargetUserName, Account_Name)
+| eval created_by=coalesce(SubjectUserName, Caller_User_Name)
+| table _time host EventCode created_by created_account ComputerName
+| sort 0 - _time

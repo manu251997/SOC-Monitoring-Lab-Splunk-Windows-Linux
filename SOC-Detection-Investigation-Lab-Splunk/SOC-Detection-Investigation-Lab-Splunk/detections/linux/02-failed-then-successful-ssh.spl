@@ -1,0 +1,6 @@
+index=linux ("Failed password" OR "Accepted password")
+| rex field=_raw "(?<result>Failed|Accepted) password for (?:invalid user )?(?<user>\S+) from (?<src_ip>\S+) port (?<src_port>\d+)"
+| eval outcome=if(result="Failed","Failed","Successful")
+| where isnotnull(user) AND isnotnull(src_ip)
+| table _time host outcome user src_ip src_port source
+| sort 0 user src_ip _time

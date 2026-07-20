@@ -1,0 +1,6 @@
+index=linux ("sudo:" OR "authentication failure")
+| rex field=_raw "sudo:\s+(?<user>\S+)\s+:"
+| rex field=_raw "COMMAND=(?<command>.*)$"
+| eval outcome=if(match(_raw,"authentication failure"),"Failed authentication","Command recorded")
+| table _time host user outcome command source _raw
+| sort 0 - _time

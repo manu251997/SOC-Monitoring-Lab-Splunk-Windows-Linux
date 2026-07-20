@@ -1,0 +1,6 @@
+flowchart LR
+    W[Windows 11 Home<br/>CynicalManX52<br/>Security Event Logs] -->|Local collection| S[Splunk Enterprise<br/>Search • Correlation • Reporting]
+    K[Kali Linux VM<br/>Hostname: Kali<br/>Authentication & System Logs] -->|Forwarded logs| S
+    S --> D[Detection Searches]
+    D --> I[Investigation Timeline]
+    I --> R[Incident Report & Recommendations]

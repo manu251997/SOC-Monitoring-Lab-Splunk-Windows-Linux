@@ -1,0 +1,6 @@
+index=windows EventCode=4732
+| eval actor=coalesce(SubjectUserName, Caller_User_Name)
+| eval member=coalesce(MemberName, Member_ID)
+| search GroupName="*Administrators*"
+| table _time host EventCode actor member GroupName
+| sort 0 - _time

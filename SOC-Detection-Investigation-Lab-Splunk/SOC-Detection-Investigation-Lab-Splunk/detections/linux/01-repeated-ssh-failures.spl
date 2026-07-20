@@ -1,0 +1,7 @@
+index=linux "Failed password"
+| rex field=_raw "Failed password for (?:invalid user )?(?<user>\S+) from (?<src_ip>\S+) port (?<src_port>\d+)"
+| where isnotnull(user) AND isnotnull(src_ip)
+| bin _time span=10m
+| stats count as failed_attempts values(src_port) as source_ports by _time host user src_ip
+| where failed_attempts >= 3
+| sort - failed_attempts
