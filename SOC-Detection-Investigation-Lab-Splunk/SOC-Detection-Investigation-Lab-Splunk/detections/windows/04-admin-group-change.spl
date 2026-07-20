@@ -1,6 +1,9 @@
-index=windows EventCode=4732
-| eval actor=coalesce(SubjectUserName, Caller_User_Name)
-| eval member=coalesce(MemberName, Member_ID)
-| search GroupName="*Administrators*"
-| table _time host EventCode actor member GroupName
-| sort 0 - _time
+index=* host="CynicalManX52" (EventCode=4732 OR EventID=4732)
+| eval event_id=coalesce(EventCode, EventID)
+| eval actor=coalesce(SubjectUserName, Caller_User_Name, Subject_Account_Name)
+| eval group_name=coalesce(TargetUserName, GroupName, Group_Name)
+| eval member=coalesce(MemberName, Member_ID, MemberSid)
+| where like(lower(group_name), "%administrators%")
+| table _time host event_id actor member group_name
+| rename event_id AS EventCode group_name AS GroupName
+| sort 0 -_time
