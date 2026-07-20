@@ -1,6 +1,10 @@
-index=linux ("sudo:" OR "authentication failure")
-| rex field=_raw "sudo:\s+(?<user>\S+)\s+:"
-| rex field=_raw "COMMAND=(?<command>.*)$"
-| eval outcome=if(match(_raw,"authentication failure"),"Failed authentication","Command recorded")
-| table _time host user outcome command source _raw
-| sort 0 - _time
+index=* host="kali"
+("pam_unix(sudo:auth)" OR "incorrect password")
+| search "authentication failure" OR "incorrect password"
+| rex field=_raw "user=(?<pam_user>[^\s;]+)"
+| rex field=_raw "sudo:\s+(?<sudo_user>[^\s:]+)\s*:"
+| rex field=_raw "ruser=(?<requesting_user>[^\s;]*)"
+| eval user=coalesce(sudo_user, pam_user, requesting_user)
+| eval outcome="Failed sudo authentication"
+| table _time host user outcome source _raw
+| sort 0 -_time
