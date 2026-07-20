@@ -1,8 +1,9 @@
-index=windows (EventCode=4625 OR EventCode=4624)
+index=* host="CynicalManX52" (EventCode=4625 OR EventCode=4624 OR EventID=4625 OR EventID=4624)
+| eval event_id=coalesce(EventCode, EventID)
 | eval user=coalesce(TargetUserName, Account_Name, user)
-| eval outcome=case(EventCode=4625,"Failed", EventCode=4624,"Successful")
+| eval outcome=case(event_id=4625, "Failed", event_id=4624, "Successful")
 | eval src_ip=coalesce(IpAddress, Source_Network_Address, src_ip)
 | eval logon_type=coalesce(LogonType, Logon_Type)
-| where isnotnull(user) AND user!="-"
-| table _time host EventCode outcome user src_ip logon_type
+| where isnotnull(user) AND user!="-" AND user!=""
+| table _time host event_id outcome user src_ip logon_type
 | sort 0 user _time
