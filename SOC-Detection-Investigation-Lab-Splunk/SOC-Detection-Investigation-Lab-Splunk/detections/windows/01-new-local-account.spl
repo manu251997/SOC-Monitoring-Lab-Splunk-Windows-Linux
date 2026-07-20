@@ -1,5 +1,6 @@
-index=windows EventCode=4720
-| eval created_account=coalesce(TargetUserName, Account_Name)
-| eval created_by=coalesce(SubjectUserName, Caller_User_Name)
-| table _time host EventCode created_by created_account ComputerName
-| sort 0 - _time
+index=* host="CynicalManX52" (EventCode=4720 OR EventID=4720)
+| eval created_account=coalesce(TargetUserName, Target_Account_Name, mvindex(Account_Name, 1))
+| eval created_by=coalesce(SubjectUserName, Subject_Account_Name, Caller_User_Name, mvindex(Account_Name, 0))
+| eval computer=coalesce(ComputerName, Computer, host)
+| table _time computer EventCode created_by created_account
+| sort 0 -_time
