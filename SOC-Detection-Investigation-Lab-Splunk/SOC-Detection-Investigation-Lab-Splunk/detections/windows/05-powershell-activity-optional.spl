@@ -1,4 +1,0 @@
-index=windows (EventCode=4103 OR EventCode=4104)
-| eval user=coalesce(UserID, User, SubjectUserName)
-| table _time host EventCode user Message
-| sort 0 - _time
