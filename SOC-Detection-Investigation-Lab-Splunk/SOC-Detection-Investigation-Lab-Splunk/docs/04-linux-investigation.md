@@ -30,22 +30,32 @@ sudo journalctl -u ssh --no-pager
 ## Step 2 — Detect Repeated SSH Failures
 
 ```spl
-index=linux "Failed password"
-| rex field=_raw "Failed password for (?:invalid user )?(?<user>\S+) from (?<src_ip>\S+) port (?<src_port>\d+)"
+index=* host="kali" "Failed password"
+| rex field=_raw "Failed password for (?:invalid user )?(?<user>\S+) from (?<src_ip>\d{1,3}(?:\.\d{1,3}){3}) port (?<src_port>\d+)"
+| where isnotnull(user) AND isnotnull(src_ip)
 | bin _time span=10m
-| stats count as failed_attempts min(_time) as first_seen max(_time) as last_seen values(src_port) as source_ports by _time host user src_ip
-| where failed_attempts >= 3
-| convert ctime(first_seen) ctime(last_seen)
-| sort - failed_attempts
+| stats count AS failed_attempts
+        values(src_port) AS source_ports
+        earliest(_time) AS first_failure
+        latest(_time) AS last_failure
+        by _time host user src_ip
+| where failed_attempts>=3
+| convert ctime(first_failure) ctime(last_failure)
+| sort 0 -failed_attempts
 ```
 
 ## Step 3 — Reconstruct Failure and Success
 
 ```spl
-index=linux ("Failed password" OR "Accepted password")
-| rex field=_raw "(?<result>Failed|Accepted) password for (?:invalid user )?(?<user>\S+) from (?<src_ip>\S+) port (?<src_port>\d+)"
-| eval outcome=if(result="Failed","Failed","Successful")
-| table _time host outcome user src_ip src_port source
+index=* host="kali"
+("Failed password" OR "Accepted password")
+| rex field=_raw "(?<result>Failed|Accepted) password for (?:invalid user )?(?<user>\S+) from (?<src_ip>\d{1,3}(?:\.\d{1,3}){3}) port (?<src_port>\d+)"
+| where isnotnull(result) AND isnotnull(user) AND isnotnull(src_ip)
+| eval outcome=case(
+    result="Failed", "Failed",
+    result="Accepted", "Successful"
+)
+| table _time host outcome user src_ip src_port _raw
 | sort 0 _time
 ```
 
