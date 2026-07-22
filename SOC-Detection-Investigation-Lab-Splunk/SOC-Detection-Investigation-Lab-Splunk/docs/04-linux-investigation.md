@@ -25,7 +25,7 @@ or, when authentication records are stored in the journal:
 sudo journalctl -u ssh --no-pager
 ```
 
-![Kali authentication evidence](../screenshots/required/08-kali-authentication-log.png)
+![Kali authentication evidence](../screenshots/08-kali-authentication-log.png)
 
 ## Step 2 — Detect Repeated SSH Failures
 
@@ -59,7 +59,7 @@ index=* host="kali"
 | sort 0 _time
 ```
 
-![Linux SSH timeline](../screenshots/required/09-linux-ssh-timeline.png)
+![Linux SSH timeline](../screenshots/09-linux-ssh-timeline.png)
 
 ## Analyst Finding
 
