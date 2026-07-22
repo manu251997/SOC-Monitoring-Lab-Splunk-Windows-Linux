@@ -1,4 +1,0 @@
-index=windows
-| stats count as events min(_time) as first_seen max(_time) as last_seen by host source sourcetype
-| convert ctime(first_seen) ctime(last_seen)
-| sort - events
