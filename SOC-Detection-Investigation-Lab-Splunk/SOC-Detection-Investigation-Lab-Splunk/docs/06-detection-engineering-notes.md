@@ -23,7 +23,6 @@ The searches in this project separate **generic detection logic** from **case-sp
 | `linux/02-failed-then-successful-ssh.spl` | Reconstruct SSH sequence | Investigation search |
 | `linux/03-sudo-activity.spl` | Review privileged Linux actions | Hunting search |
 | `correlation/01-windows-account-lifecycle.spl` | Correlate creation and authentication | Case timeline |
-| `validation/01-windows-data-health.spl` and `validation/02-linux-data-health.spl` | Confirm data freshness and volume | Data-quality check |
 
 ## Threshold Rationale
 
