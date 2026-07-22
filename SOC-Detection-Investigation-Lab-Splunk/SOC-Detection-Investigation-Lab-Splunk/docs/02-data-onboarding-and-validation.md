@@ -16,10 +16,10 @@ A detection is trustworthy only when the analyst first confirms that the expecte
 ### Validation Search
 
 ```spl
-index=windows
-| stats count as events min(_time) as first_seen max(_time) as last_seen by host source sourcetype
+host="CynicalManX52"
+| stats count AS events min(_time) AS first_seen max(_time) AS last_seen BY host source sourcetype
 | convert ctime(first_seen) ctime(last_seen)
-| sort - events
+| sort 0 - events
 ```
 
 ![Windows data ingestion](../screenshots/required/01-windows-data-ingestion.png)
@@ -27,7 +27,7 @@ index=windows
 ### Validation Criteria
 
 - The expected Windows host is visible as `CynicalManX52`.
-- Security events are present in `index=windows`.
+- Security events are present in `host="CynicalManX52"`.
 - Event IDs 4720, 4625 and 4624 can be searched.
 - Event timestamps match the time of the test activity.
 - Account and host fields can be identified in the raw event.
@@ -43,10 +43,10 @@ index=windows
 ### Validation Search
 
 ```spl
-index=linux
-| stats count as events min(_time) as first_seen max(_time) as last_seen by host source sourcetype
+host="kali"
+| stats count AS events min(_time) AS first_seen max(_time) AS last_seen BY host source sourcetype
 | convert ctime(first_seen) ctime(last_seen)
-| sort - events
+| sort 0 - events
 ```
 
 ![Linux data ingestion](../screenshots/required/02-linux-data-ingestion.png)
@@ -54,7 +54,7 @@ index=linux
 ### Validation Criteria
 
 - The expected Linux host is visible as `Kali` or the configured forwarder host value.
-- SSH or authentication text is searchable in `index=linux`.
+- SSH or authentication text is searchable in `host="kali"`.
 - Both failed and accepted authentication events are present.
 - The username and source address can be extracted from `_raw`.
 - Event time is aligned with the Windows/Splunk host time.
