@@ -115,7 +115,6 @@ SOC-Detection-Investigation-Lab-Splunk/
 │   ├── correlation/
 ├── setup/
 ├── screenshots/
-│   ├── required/
 └── assets/
 ```
 
