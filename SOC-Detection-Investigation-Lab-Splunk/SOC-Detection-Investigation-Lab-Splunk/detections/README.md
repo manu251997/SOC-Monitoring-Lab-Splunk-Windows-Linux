@@ -1,10 +1,10 @@
 # Detection Catalogue
 
-These SPL files contain reusable searches. Copy **one search at a time** into Splunk Search & Reporting.
+These SPL files contains reusable searches. Copying **one search at a time** into Splunk Search & Reporting.
 
 ## How to Use
 
-1. Confirm that the `windows` and `linux` indexes exist.
+1. Confirm that the indexes exist.
 2. Select a time range containing the lab activity.
 3. Run the relevant detection file.
 4. Inspect raw events when normalized fields are blank.
@@ -25,9 +25,8 @@ These SPL files contain reusable searches. Copy **one search at a time** into Sp
 - `02-failed-then-successful-ssh.spl`
 - `03-sudo-activity.spl`
 
-## Correlation and Validation
+## Correlation 
 
 - `correlation/01-windows-account-lifecycle.spl`
-- `validation/01-windows-data-health.spl` and `validation/02-linux-data-health.spl`
 
 > The thresholds are intentionally low for a home-lab demonstration and must be tuned before production use.
