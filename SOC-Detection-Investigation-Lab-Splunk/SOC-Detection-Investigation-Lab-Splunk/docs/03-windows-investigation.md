@@ -26,9 +26,9 @@ index=* host="CynicalManX52" (EventCode=4720 OR EventID=4720)
 
 ### Evidence
 
-![Windows Event ID 4720](../screenshots/required/03-windows-event-4720.png)
+![Windows Event ID 4720](../screenshots/03-windows-event-4720.png)
 
-![Splunk Event ID 4720](../screenshots/required/04-splunk-event-4720.png)
+![Splunk Event ID 4720](../screenshots/04-splunk-event-4720.png)
 
 ### Analyst Finding
 
@@ -50,7 +50,7 @@ index=* host="CynicalManX52" (EventCode=4625 OR EventID=4625)
 | sort 0 -failed_attempts
 ```
 
-![Windows Event ID 4625](../screenshots/required/05-windows-event-4625.png)
+![Windows Event ID 4625](../screenshots/05-windows-event-4625.png)
 
 ### Analyst Finding
 
@@ -85,7 +85,7 @@ index=* host="CynicalManX52"
 | table _time sequence host user event_id timeline src_ip logon_type
 ```
 
-![Windows Event ID 4624](../screenshots/required/06-windows-event-4624.png)
+![Windows Event ID 4624](../screenshots/06-windows-event-4624.png)
 
 ### Analyst Finding
 
@@ -105,7 +105,7 @@ index=* host="CynicalManX52" (EventCode=4732 OR EventID=4732)
 | sort 0 -_time
 ```
 
-![Windows authentication timeline](../screenshots/required/07-windows-authentication-timeline.png)
+![Windows authentication timeline](../screenshots/07-windows-authentication-timeline.png)
 
 ## Triage Assessment
 
