@@ -139,4 +139,4 @@ This lab demonstrates the complete workflow expected from an entry-level SOC ana
 Aspiring SOC Analyst | MS Cybersecurity Operations  
 [LinkedIn](https://www.linkedin.com/in/manu-kanwar-cybersecurity)
 
-> Safety note: Commands and authentication tests in this repository are intended only for systems you own or are explicitly authorized to test.
+.
