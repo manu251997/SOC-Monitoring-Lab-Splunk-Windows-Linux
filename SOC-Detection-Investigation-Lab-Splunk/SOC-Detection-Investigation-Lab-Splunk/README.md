@@ -77,17 +77,17 @@ flowchart LR
 
 | Windows events in Splunk | Linux events in Splunk |
 |---|---|
-| ![Windows data ingestion](screenshots/required/01-windows-data-ingestion.png) | ![Linux data ingestion](screenshots/required/02-linux-data-ingestion.png) |
+| ![Windows data ingestion](screenshots/01-windows-data-ingestion.png) | ![Linux data ingestion](screenshots/02-linux-data-ingestion.png) |
 
 ### Authentication Investigations
 
 | Windows failure-to-success sequence | Linux SSH sequence |
 |---|---|
-| ![Windows authentication timeline](screenshots/required/07-windows-authentication-timeline.png) | ![Linux SSH timeline](screenshots/required/09-linux-ssh-timeline.png) |
+| ![Windows authentication timeline](screenshots/07-windows-authentication-timeline.png) | ![Linux SSH timeline](screenshots/09-linux-ssh-timeline.png) |
 
 ### Correlated Incident Timeline
 
-![Complete Windows incident timeline](screenshots/required/10-complete-incident-timeline.png)
+![Complete Windows incident timeline](screenshots/10-complete-incident-timeline.png)
 
 ## Investigation Summary
 
