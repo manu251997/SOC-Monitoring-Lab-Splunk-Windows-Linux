@@ -22,7 +22,7 @@ host="CynicalManX52"
 | sort 0 - events
 ```
 
-![Windows data ingestion](../screenshots/required/01-windows-data-ingestion.png)
+![Windows data ingestion](../screenshots/01-windows-data-ingestion.png)
 
 ### Validation Criteria
 
@@ -49,7 +49,7 @@ host="kali"
 | sort 0 - events
 ```
 
-![Linux data ingestion](../screenshots/required/02-linux-data-ingestion.png)
+![Linux data ingestion](../screenshots/02-linux-data-ingestion.png)
 
 ### Validation Criteria
 
