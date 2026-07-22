@@ -11,7 +11,7 @@
 ## 2. Confirm Event IDs
 
 ```spl
-index=windows
+index=* host="CynicalManx52"
 | stats count by EventCode
 | sort - count
 ```
@@ -19,7 +19,7 @@ index=windows
 ## 3. Inspect Fields
 
 ```spl
-index=windows EventCode=4625
+index=* host="CynicalManx52" EventCode=4625
 | head 5
 | table _time host EventCode TargetUserName Account_Name IpAddress Source_Network_Address LogonType Logon_Type _raw
 ```
