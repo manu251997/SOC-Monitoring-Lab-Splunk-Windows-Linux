@@ -59,6 +59,7 @@ Multiple Event ID 4625 records show unsuccessful authentication attempts involvi
 ## Step 3 — Confirm Successful Authentication
 
 ```spl
+
 index=* host="CynicalManX52"
 (EventCode=4625 OR EventCode=4624 OR EventID=4625 OR EventID=4624)
 ("soclabuser" OR TargetUserName="soclabuser" OR Account_Name="soclabuser")
@@ -94,15 +95,30 @@ A later Event ID 4624 confirms that the account successfully authenticated. The 
 ## Step 4 — Reconstruct the Authentication Timeline
 
 ```spl
-index=* host="CynicalManX52" (EventCode=4732 OR EventID=4732)
-| eval event_id=coalesce(EventCode, EventID)
-| eval actor=coalesce(SubjectUserName, Caller_User_Name, Subject_Account_Name)
-| eval group_name=coalesce(TargetUserName, GroupName, Group_Name)
-| eval member=coalesce(MemberName, Member_ID, MemberSid)
-| where like(lower(group_name), "%administrators%")
-| table _time host event_id actor member group_name
-| rename event_id AS EventCode group_name AS GroupName
-| sort 0 -_time
+index=* host="CynicalManX52"
+(EventCode=4625 OR EventCode=4624 OR EventID=4625 OR EventID=4624)
+("soclabuser" OR TargetUserName="soclabuser" OR Account_Name="soclabuser")
+| eval event_id=tonumber(coalesce(EventCode, EventID))
+| eval user=lower(coalesce(TargetUserName, mvindex(Account_Name,-1), user))
+| eval user=if(isnull(user) AND like(lower(_raw),"%soclabuser%"),"soclabuser",user)
+| where user="soclabuser"
+| eval outcome=case(
+    event_id=4625, "Failed",
+    event_id=4624, "Successful"
+)
+| eval src_ip=coalesce(IpAddress, Source_Network_Address, src_ip, "Local/Unavailable")
+| eval logon_type=coalesce(LogonType, Logon_Type, "Unknown")
+| sort 0 _time
+| streamstats count AS sequence
+| streamstats count(eval(event_id=4625)) AS failed_attempts_before_success 
+    by user reset_after="(event_id=4624)"
+| eval timeline=case(
+    event_id=4625, "Failed attempt ".failed_attempts_before_success,
+    event_id=4624 AND failed_attempts_before_success>0,
+        "Successful after ".failed_attempts_before_success." failed attempt(s)",
+    event_id=4624, "Successful login"
+)
+| table _time sequence host user event_id timeline src_ip logon_type
 ```
 
 ![Windows authentication timeline](../screenshots/07-windows-authentication-timeline.png)
