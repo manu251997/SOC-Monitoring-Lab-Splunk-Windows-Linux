@@ -113,12 +113,9 @@ SOC-Detection-Investigation-Lab-Splunk/
 │   ├── windows/
 │   ├── linux/
 │   ├── correlation/
-│   └── validation/
 ├── setup/
 ├── screenshots/
 │   ├── required/
-│   └── optional/
-├── sample-data/
 └── assets/
 ```
 
