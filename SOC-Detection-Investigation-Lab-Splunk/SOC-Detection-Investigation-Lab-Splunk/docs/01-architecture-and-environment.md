@@ -52,12 +52,10 @@ flowchart TB
 
 The laptop has limited memory, so the lab prioritizes native Windows and Linux logs rather than running multiple heavy security products simultaneously. Sysmon, Wazuh, Microsoft Sentinel and additional virtual machines can be introduced in separate projects.
 
-PowerShell Operational and Sysmon channels are treated as optional because they may not be enabled or collected by default. The core project remains complete using Windows Security events and Linux authentication logs.
 
 ## Security and Privacy
 
 - All tests are performed only in the user's own lab.
-- Passwords are never committed to GitHub.
-- Raw logs, EVTX files and PCAP files are excluded by `.gitignore`.
-- Screenshots should be cropped to remove unrelated personal information.
-- Public IP addresses, tokens and credentials should be masked before publication.
+- Passwords are not committed to GitHub.
+- Screenshots are cropped to remove unrelated personal information.
+- Public IP addresses, tokens and credentials are masked before publication.
